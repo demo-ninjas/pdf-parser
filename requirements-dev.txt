@@ -1,0 +1,8 @@
+azure-core
+azure-ai-documentintelligence
+pandas
+tqdm
+future
+PyMuPDF
+openai
+python-dotenv

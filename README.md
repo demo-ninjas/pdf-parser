@@ -1,0 +1,50 @@
+# Basic PDF to Markdown
+
+This is a simple library for converting PDF files into markdown. 
+
+The parser takes 2 steps to convert the PDF into markdown: 
+
+1. Use **Azure DocumentIntelligence** to parse the PDF into markdown
+2. Extract all figures + images from the PDF, and create a markdown representation using an LLM to support
+
+
+## Install 
+
+You can pip install this libarary like this: 
+
+```bash
+pip install git+https://github.com/demo-ninjas/pdf-parser
+```
+
+NB: It is best to do this in a virtual environment :)
+
+## Library Use
+
+To use this as a library, simply add this library to your requirements.txt: 
+
+```
+git+https://github.com/demo-ninjas/pdf-parser
+```
+
+Then, use the library, like this: 
+
+```Python
+from pdfparser.util import parse_args
+args = parse_args() ## You can also just create the args dict in any way you choose, or pass an empty dictionary and rely on the ENV
+
+from pdfparser.parse.parser import PdfParser
+parser = PdfParser(args)
+
+result = parser.parse(file)
+
+mardkown_content = result.markdown
+document_title = result.title
+```
+
+## Command Line
+
+The install will add 2 command line programs to your environment: 
+
+* `parse-pdf` - parse a single pdf into markdown
+* `parse-all-pdfs` - parse a folder of pdf's into markdown
+

@@ -1,0 +1,32 @@
+[project]
+name = "pdfparser"
+version = "0.1.0"
+authors = [
+  { name="Stricko", email="adams@strickos.com" },
+]
+description = "A small pdf parser making use of DocumentIntelligence + native PDF parsing."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    'azure-core',
+    'azure-ai-documentintelligence',
+    'pandas',
+    'tqdm',
+    'future',
+    'PyMuPDF',
+    'openai',
+    'python-dotenv'
+]
+
+[project.scripts]
+parse-pdf = "pdfparser.bin.parse_pdf:main"
+parse-all-pdfs = "pdfparser.bin.parse_all_pdfs:main"
+
+[project.urls]
+Homepage = "https://github.com/demo-ninjas/pdfparser"
+Issues = "https://github.com/demo-ninjas/pdfparser/issues"

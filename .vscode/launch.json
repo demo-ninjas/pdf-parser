@@ -1,0 +1,55 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "inputs": [
+        {
+            "id": "img",
+            "type": "promptString",
+            "description": "Path to the image file to analyze",
+            "default": "./.local/image.png"
+        },
+        {
+            "id": "pdfile",
+            "type": "promptString",
+            "description": "Path to the PDF file to parse",
+            "default": "./.local/article.pdf"
+        }
+    ],
+    "configurations": [
+        {
+            "name": "Debug Parse PDF",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/pdfparser/bin/parse_pdf.py",
+            "console": "integratedTerminal",
+            "args": "--file=${input:pdfile} --verbose=true --overwrite=true",
+            "env": {
+                "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src"
+            }
+        },
+        {
+            "name": "Debug Parse All",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/pdfparser/bin/parse_all_pdfs.py",
+            "console": "integratedTerminal",
+            "args": "./.local/ --verbose=true --overwrite=true",
+            "env": {
+                "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src"
+            }
+        },
+        {
+            "name": "Debug Analyse Image",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/pdfparser/parse/image_analysis.py",
+            "console": "integratedTerminal",
+            "args": "--img=${input:img} --verbose=true",
+            "env": {
+                "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src"
+            }
+        }
+    ]
+}
