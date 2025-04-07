@@ -6,12 +6,16 @@ def main():
 
     from concurrent.futures import Future, ThreadPoolExecutor
     from pdfparser.util import parse_args
-    from pdfparser.parse.parser import PdfParser
+    from pdfparser import PdfParser
     from pathlib import Path
     from tqdm import tqdm
     import os
 
     args = parse_args()
+
+    if args.get("help", False):
+        print("Usage: parse_all_pdfs.py [--dir <dir>] [--output <output>] [--overwrite] [--verbose] [--analyse-images] [--use-iterative-image-analyser]")
+        return
 
     parser = PdfParser(args)
     dir = args.get("dir")

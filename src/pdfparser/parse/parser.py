@@ -23,11 +23,13 @@ class PdfParser():
     analyser:DocIntelAnalyser = None
     llmclient:LLMClient = None
     concurrency:int = None
+    save_images:bool = None
 
     def __init__(self, args:dict[str, str]):
         self.analyser = DocIntelAnalyser(args)
         self.llm = LLMClient(args) if args.get('use-llm', True) else None
         self.concurrency = int(args.get('concurrency', 0))
+        self.save_images = args.get('save-images', True)
 
     def parse(self, file:Path, analyse_images:bool = True, use_iterative_image_analyser:bool = True, verbose:bool = True):
         import os
@@ -49,7 +51,6 @@ class PdfParser():
         ## Step 1: Analyse the document using Azure Document Intelligence
         cached_analysis = file_folder / f"{file.stem}.analysis.json"
         analysis = None
-        using_cached_analysis = False
         if cached_analysis.exists():
             if verbose: print(f" - Loading cached analysis from '{cached_analysis}'")
             with open(cached_analysis, "r", encoding="utf-8") as f:
@@ -58,7 +59,6 @@ class PdfParser():
                     try:
                         import json
                         analysis = DocIntelAnalysis.from_json(json.loads(json_data))
-                        using_cached_analysis = True
                     except Exception as e:
                         print(f"Error loading cached analysis, will fallback to re-analysing the document. Error: {e}")
                         analysis = None
@@ -148,7 +148,9 @@ class PdfParser():
                             if verbose: print(f"  - Extracting image: {image_name}")
                             pix = pdf_page.get_pixmap(clip=[x0, y0, x1, y1], matrix=Matrix(2, 2))
                             img_path = os.path.join(image_folder, image_name)
-                            pix.save(img_path)
+                            if self.save_images:
+                                if verbose: print(f"  - Saving image to '{img_path}'")
+                                pix.save(img_path)
                             output_result.images.append(Path(img_path))
                             image_bytes = pix.tobytes("png")
 

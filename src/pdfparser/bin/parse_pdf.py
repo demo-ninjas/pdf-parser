@@ -6,7 +6,12 @@ from pdfparser.util import parse_args
 
 def main(): 
     args = parse_args()
-    from pdfparser.parse.parser import PdfParser
+
+    if args.get("help", False): 
+        print("Usage: parse_pdf.py [--file <file>] [--output <output>] [--overwrite] [--verbose] [--analyse-images] [--use-iterative-image-analyser]")
+        return
+
+    from pdfparser import PdfParser
     from pathlib import Path
 
     parser = PdfParser(args)

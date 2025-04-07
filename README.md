@@ -30,13 +30,18 @@ Then, use the library, like this:
 
 ```Python
 from pdfparser.util import parse_args
-args = parse_args() ## You can also just create the args dict in any way you choose, or pass an empty dictionary and rely on the ENV
+args = parse_args() ## or create a dict of config arguments ({ "arg1name":"arg1val", "arg2name":"arg2val", etc... }), or pass an empty dictionary and rely on the ENV
 
-from pdfparser.parse.parser import PdfParser
+from pdfparser import PdfParser
 parser = PdfParser(args)
 
+from pathlib import Path
+file = Path('path/to/pdf-file.pdf')
+
+# Parse the File into Markdown
 result = parser.parse(file)
 
+# Result contains the file as a markdown string, along with the resolved title of the document + a  list of paths to the images that were saved  
 mardkown_content = result.markdown
 document_title = result.title
 ```
