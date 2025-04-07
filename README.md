@@ -42,7 +42,7 @@ file = Path('path/to/pdf-file.pdf')
 result = parser.parse(file)
 
 # Result contains the file as a markdown string, along with the resolved title of the document + a  list of paths to the images that were saved  
-mardkown_content = result.markdown
+markdown_content = result.markdown
 document_title = result.title
 ```
 
